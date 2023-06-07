@@ -33,4 +33,34 @@ class WeatherRepo {
       throw ApiFailedException(response);
     }
   }
+
+  Future<CurrentWeather> getCurrentWeatherFromLatLng({
+    required double lat,
+    required double lng,
+  }) async {
+    ApiResponse response = await apiService.apiCall(
+      route: 'current?key=9b3bf0fb00af4d2fad81c842ec6e90ea&&lat=$lat&lon=$lng',
+      requestMethod: RequestMethod.get,
+    );
+    if (response.isSuccess) {
+      return CurrentWeather.fromJson(response.data?['data'][0]);
+    } else {
+      throw ApiFailedException(response);
+    }
+  }
+
+  Future<List<ForecastWeather>> getForecastWeatherFromLatLng({
+    required double lat,
+    required double lng,
+  }) async {
+    ApiResponse response = await apiService.apiCall(
+      route: 'forecast/daily?key=9b3bf0fb00af4d2fad81c842ec6e90ea&days=7&lat=$lat&lon=$lng',
+      requestMethod: RequestMethod.get,
+    );
+    if (response.isSuccess) {
+      return ForecastWeather.listFromJson(response.data?['data']);
+    } else {
+      throw ApiFailedException(response);
+    }
+  }
 }

@@ -9,6 +9,7 @@ class CurrentWeather {
   double? temp;
   Weather? weather;
   double? windSpd;
+  int? rh;
 
   CurrentWeather({
     this.cityName,
@@ -18,6 +19,7 @@ class CurrentWeather {
     this.temp,
     this.weather,
     this.windSpd,
+    this.rh,
   });
 
   static CurrentWeather fromJson(final Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class CurrentWeather {
       temp: double.parse(json['temp'].toString()),
       weather: Weather.fromJson(json['weather']),
       windSpd: double.parse(json['wind_spd'].toString()),
+      rh: json['rh'],
     );
   }
 }

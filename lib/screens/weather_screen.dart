@@ -165,26 +165,74 @@ class _WeatherScreenState extends State<WeatherScreen> {
               const SizedBox(
                 width: 12,
               ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${_weatherController.currentWeather.temp ?? ""}° C',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Text(
+                      _weatherController.currentWeather.weather?.description ?? "",
+                      style: const TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${_weatherController.currentWeather.temp ?? ""}° C',
-                    style: const TextStyle(
-                      fontSize: 22,
-                      color: Colors.white,
-                    ),
+                  Row(
+                    children: [
+                      Image.asset(
+                        'lib/assets/weather/wind.png',
+                        height: 24,
+                        width: 24,
+                      ),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        '${_weatherController.currentWeather.windSpd?.round() ?? ""} m/s',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
-                    height: 6,
+                    height: 12,
                   ),
-                  Text(
-                    _weatherController.currentWeather.weather?.description ?? "",
-                    style: const TextStyle(
-                      fontSize: 22,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      Image.asset(
+                        'lib/assets/weather/humidity.png',
+                        height: 24,
+                        width: 24,
+                      ),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        '${_weatherController.currentWeather.rh ?? ""}%',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               )
