@@ -26,9 +26,9 @@ class CurrentWeather {
       sunrise: json['sunrise'],
       sunset: json["sunset"],
       obTime: (json["ob_time"] as String?).toDateTime(),
-      temp: json['temp'],
+      temp: double.parse(json['temp'].toString()),
       weather: Weather.fromJson(json['weather']),
-      windSpd: json['wind_spd'],
+      windSpd: double.parse(json['wind_spd'].toString()),
     );
   }
 }

@@ -13,7 +13,7 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
-  WeatherController _weatherController = WeatherController();
+  final WeatherController _weatherController = WeatherController();
 
   @override
   void initState() {
@@ -123,10 +123,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
           ),
           Row(
             children: [
-              const Icon(
-                Icons.cloud,
-                size: 82,
-                color: Colors.white,
+              Image.asset(
+                '${_weatherController.currentWeather.weather?.weatherIcon}',
+                height: 82,
+                width: 82,
               ),
               const SizedBox(
                 width: 12,
@@ -201,13 +201,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
             height: 46,
             width: 46,
             decoration: const BoxDecoration(shape: BoxShape.circle, color: Color(0xFF9AB6FF)),
-            child: const Center(
-              child: Icon(
-                Icons.cloud,
-                size: 26,
-                color: Colors.white,
-              ),
-            ),
+            child: Center(
+                child: Image.asset(
+              '${forecastWeather.weather?.weatherIcon}',
+              height: 26,
+              width: 26,
+            )),
           ),
           const SizedBox(
             width: 16,
