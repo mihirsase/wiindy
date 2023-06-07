@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:wiindy/models/current_weather.dart';
 import 'package:wiindy/models/forecast_weather.dart';
 import 'package:wiindy/repos/weather_repo.dart';
+import 'package:wiindy/screens/error_screen.dart';
 import 'package:wiindy/services/api_service.dart';
 import 'package:wiindy/services/notifier.dart';
 
@@ -28,6 +29,7 @@ class WeatherController extends GetxController {
         message: e is ApiFailedException ? e.response?.errorMessage : null,
         notifType: NotifType.error,
       );
+      Get.off(() => const ErrorScreen());
     }
   }
 }
