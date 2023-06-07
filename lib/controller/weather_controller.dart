@@ -17,11 +17,11 @@ class WeatherController extends GetxController {
     this.weatherRepo = weatherRepo ?? WeatherRepo();
   }
 
-  Future<void> loadWeatherData() async {
+  Future<void> loadWeatherData({required String city}) async {
     try {
       isLoading.value = true;
-      currentWeather = await weatherRepo.getCurrentWeather();
-      forecastWeather = await weatherRepo.getForecastWeather();
+      currentWeather = await weatherRepo.getCurrentWeather(city: city);
+      forecastWeather = await weatherRepo.getForecastWeather(city: city);
       isLoading.value = false;
     } catch (e) {
       Notifier.instance.notify(

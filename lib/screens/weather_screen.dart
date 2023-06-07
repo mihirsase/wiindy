@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:wiindy/controller/weather_controller.dart';
 import 'package:wiindy/extensions/date_time_extension.dart';
 import 'package:wiindy/models/forecast_weather.dart';
-import 'package:wiindy/screens/search_screen.dart';
+import 'package:wiindy/services/notifier.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({Key? key}) : super(key: key);
@@ -14,10 +14,11 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
   final WeatherController _weatherController = WeatherController();
+  String? city;
 
   @override
   void initState() {
-    _weatherController.loadWeatherData();
+    _weatherController.loadWeatherData(city: "London");
     super.initState();
   }
 
@@ -61,26 +62,58 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Widget get _searchBar {
     return Row(
       children: [
-        const Icon(
-          Icons.location_on,
-          size: 24,
-        ),
-        const SizedBox(
-          width: 8,
-        ),
         Expanded(
-          child: Text(
-            _weatherController.currentWeather.cityName ?? "",
-            style: const TextStyle(fontSize: 14),
+          child: Card(
+            elevation: 1,
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: TextField(
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Search for cities",
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.black,
+                  ),
+                ),
+                textCapitalization: TextCapitalization.sentences,
+                onChanged: (String? val) {
+                  city = val;
+                },
+                cursorWidth: 1,
+                cursorColor: Colors.black,
+              ),
+            ),
           ),
         ),
         GestureDetector(
           onTap: () {
-            Get.to(() => const SearchScreen());
+            if (city != null && city!.isNotEmpty) {
+              _weatherController.loadWeatherData(city: city!);
+            } else {
+              Notifier.instance.notify(notifType: NotifType.error, message: "Enter a search query");
+            }
           },
-          child: const Icon(
-            Icons.search,
-            size: 24,
+          child: Card(
+            elevation: 1,
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Center(
+                child: Text(
+                  "Go",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ],
@@ -100,17 +133,18 @@ class _WeatherScreenState extends State<WeatherScreen> {
         children: [
           Row(
             children: [
+              const Icon(
+                Icons.location_on,
+                color: Colors.white,
+              ),
               Expanded(
                 child: Text(
-                  DateTime.now().toDateFormat(),
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
+                  _weatherController.currentWeather.cityName ?? "",
+                  style: const TextStyle(fontSize: 14, color: Colors.white),
                 ),
               ),
               Text(
-                DateTime.now().toTimeFormat(),
+                DateTime.now().toDateFormat(),
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white,

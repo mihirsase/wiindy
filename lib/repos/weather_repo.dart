@@ -10,9 +10,9 @@ class WeatherRepo {
     this.apiService = apiService ?? ApiService.instance;
   }
 
-  Future<CurrentWeather> getCurrentWeather() async {
+  Future<CurrentWeather> getCurrentWeather({required String city}) async {
     ApiResponse response = await apiService.apiCall(
-      route: 'current?key=9b3bf0fb00af4d2fad81c842ec6e90ea&city=London',
+      route: 'current?key=9b3bf0fb00af4d2fad81c842ec6e90ea&city=$city',
       requestMethod: RequestMethod.get,
     );
     if (response.isSuccess) {
@@ -22,9 +22,9 @@ class WeatherRepo {
     }
   }
 
-  Future<List<ForecastWeather>> getForecastWeather() async {
+  Future<List<ForecastWeather>> getForecastWeather({required String city}) async {
     ApiResponse response = await apiService.apiCall(
-      route: 'forecast/daily?key=9b3bf0fb00af4d2fad81c842ec6e90ea&days=7&city=London',
+      route: 'forecast/daily?key=9b3bf0fb00af4d2fad81c842ec6e90ea&days=7&city=$city',
       requestMethod: RequestMethod.get,
     );
     if (response.isSuccess) {
