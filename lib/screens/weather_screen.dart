@@ -1,0 +1,233 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:wiindy/controller/weather_controller.dart';
+import 'package:wiindy/extenstions/date_time_extention.dart';
+import 'package:wiindy/screens/search_screen.dart';
+
+class WeatherScreen extends StatefulWidget {
+  const WeatherScreen({Key? key}) : super(key: key);
+
+  @override
+  State<WeatherScreen> createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends State<WeatherScreen> {
+  WeatherController _weatherController = WeatherController();
+
+  @override
+  void initState() {
+    _weatherController.loadWeatherData();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Obx(
+          () {
+            if (_weatherController.isLoading.value) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _searchBar,
+                    const SizedBox(
+                      height: 22,
+                    ),
+                    _weatherInfoCard,
+                    const SizedBox(
+                      height: 22,
+                    ),
+                    _weatherForecast,
+                  ],
+                ),
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget get _searchBar {
+    return Row(
+      children: [
+        const Icon(
+          Icons.location_on,
+          size: 24,
+        ),
+        const SizedBox(
+          width: 8,
+        ),
+        Expanded(
+          child: Text(
+            _weatherController.currentWeather.cityName ?? "",
+            style: const TextStyle(fontSize: 14),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const SearchScreen());
+          },
+          child: const Icon(
+            Icons.search,
+            size: 24,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget get _weatherInfoCard {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: const Color(0xFF457FFA),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      padding: const EdgeInsets.all(22),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  DateTime.now().toDateFormat(),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Text(
+                DateTime.now().toTimeFormat(),
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.cloud,
+                size: 82,
+                color: Colors.white,
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${_weatherController.currentWeather.temp ?? ""}° C',
+                    style: const TextStyle(
+                      fontSize: 22,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Text(
+                    _weatherController.currentWeather.weather?.description ?? "",
+                    style: const TextStyle(
+                      fontSize: 22,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+           Text(
+            "Last updated at ${_weatherController.currentWeather.obTime.toTimeFormat()}",
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget get _weatherForecast {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "7-day forecast",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+              color: const Color(0xFFD2DFFF), borderRadius: BorderRadius.circular(16)),
+          child: Row(
+            children: [
+              Container(
+                height: 46,
+                width: 46,
+                decoration: const BoxDecoration(shape: BoxShape.circle, color: Color(0xFF9AB6FF)),
+                child: const Center(
+                  child: Icon(
+                    Icons.cloud,
+                    size: 26,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 16,
+              ),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Today",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      "Cloudy",
+                      style: TextStyle(
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Text(
+                "19 C",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
