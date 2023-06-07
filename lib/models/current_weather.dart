@@ -1,4 +1,4 @@
-import 'package:wiindy/extenstions/string_extention.dart';
+import 'package:wiindy/extensions/string_extension.dart';
 import 'package:wiindy/models/weather.dart';
 
 class CurrentWeather {

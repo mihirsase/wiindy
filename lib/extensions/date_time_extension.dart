@@ -15,4 +15,11 @@ extension DateTimeExtension on DateTime? {
     return "";
   }
 
+  String toDay() {
+    if (this != null) {
+      return DateFormat.E().format(this!.toLocal());
+    }
+    return "";
+  }
+
 }

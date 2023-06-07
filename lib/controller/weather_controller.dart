@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:wiindy/models/current_weather.dart';
+import 'package:wiindy/models/forecast_weather.dart';
 import 'package:wiindy/repos/weather_repo.dart';
 import 'package:wiindy/services/api_service.dart';
 import 'package:wiindy/services/notifier.dart';
@@ -8,6 +9,7 @@ class WeatherController extends GetxController {
   late WeatherRepo weatherRepo;
   var isLoading = false.obs;
   late CurrentWeather currentWeather;
+  late List<ForecastWeather> forecastWeather;
 
   WeatherController({
     WeatherRepo? weatherRepo,
@@ -19,6 +21,7 @@ class WeatherController extends GetxController {
     try {
       isLoading.value = true;
       currentWeather = await weatherRepo.getCurrentWeather();
+      forecastWeather = await weatherRepo.getForecastWeather();
       isLoading.value = false;
     } catch (e) {
       Notifier.instance.notify(

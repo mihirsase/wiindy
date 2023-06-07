@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wiindy/controller/weather_controller.dart';
-import 'package:wiindy/extenstions/date_time_extention.dart';
+import 'package:wiindy/extensions/date_time_extension.dart';
+import 'package:wiindy/models/forecast_weather.dart';
 import 'package:wiindy/screens/search_screen.dart';
 
 class WeatherScreen extends StatefulWidget {
@@ -32,10 +33,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
               );
             } else {
               return Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: ListView(
                   children: [
+                    const SizedBox(
+                      height: 12,
+                    ),
                     _searchBar,
                     const SizedBox(
                       height: 22,
@@ -156,7 +159,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
           const SizedBox(
             height: 24,
           ),
-           Text(
+          Text(
             "Last updated at ${_weatherController.currentWeather.obTime.toTimeFormat()}",
             style: const TextStyle(
               fontSize: 14,
@@ -179,55 +182,62 @@ class _WeatherScreenState extends State<WeatherScreen> {
         const SizedBox(
           height: 8,
         ),
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              color: const Color(0xFFD2DFFF), borderRadius: BorderRadius.circular(16)),
-          child: Row(
-            children: [
-              Container(
-                height: 46,
-                width: 46,
-                decoration: const BoxDecoration(shape: BoxShape.circle, color: Color(0xFF9AB6FF)),
-                child: const Center(
-                  child: Icon(
-                    Icons.cloud,
-                    size: 26,
-                    color: Colors.white,
+        ..._weatherController.forecastWeather.map((final ForecastWeather forecastWeather) {
+          return _weatherForecastCard(forecastWeather);
+        }).toList(),
+      ],
+    );
+  }
+
+  Widget _weatherForecastCard(final ForecastWeather forecastWeather) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(16),
+      decoration:
+          BoxDecoration(color: const Color(0xFFD2DFFF), borderRadius: BorderRadius.circular(16)),
+      child: Row(
+        children: [
+          Container(
+            height: 46,
+            width: 46,
+            decoration: const BoxDecoration(shape: BoxShape.circle, color: Color(0xFF9AB6FF)),
+            child: const Center(
+              child: Icon(
+                Icons.cloud,
+                size: 26,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  forecastWeather.validDate.toDay(),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 2,
+                ),
+                Text(
+                  forecastWeather.weather?.description ?? "",
+                  style: const TextStyle(
+                    fontSize: 12,
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              const Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Today",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 2,
-                    ),
-                    Text(
-                      "Cloudy",
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Text(
-                "19 C",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-            ],
+              ],
+            ),
           ),
-        )
-      ],
+          Text(
+            '${forecastWeather.temp ?? ""}° C',
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
     );
   }
 }
