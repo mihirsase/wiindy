@@ -11,7 +11,6 @@ class LocationService {
   }
 
   loc.Location location = loc.Location();
-  loc.LocationData? locationData;
 
   Future<bool> checkLocationPermission() async {
     bool serviceStatus =
@@ -25,18 +24,16 @@ class LocationService {
     }
   }
 
-  loc.LocationData? getLocationData() {
+  Future<loc.LocationData?> getLocationData() async {
     try {
-      checkLocationPermission().then((bool status) {
-        if (status == true) {
-          location.getLocation().then((loc.LocationData data) => locationData = data);
-        }
-      });
+      bool status = await checkLocationPermission();
+      if (status == true) {
+        return await location.getLocation();
+      }
     } catch (e) {
       print(e);
     }
-
-    return locationData;
+    return null;
   }
 
   Future<void> enableLocationSharing({
@@ -60,7 +57,6 @@ class LocationService {
     if (serviceStatus == true) {
       PermissionStatus permissionStatus = await Permission.locationWhenInUse.status;
 
-
       // Asking for permission 1st time
       if (permissionStatus != PermissionStatus.granted) {
         permissionStatus = await Permission.locationWhenInUse.request();
@@ -68,11 +64,9 @@ class LocationService {
         // ------------------------------------------------------------
         if (permissionStatus == PermissionStatus.granted) {
           permissionStatus = await Permission.locationWhenInUse.status;
-          if (permissionStatus == PermissionStatus.denied) {
-          }
+          if (permissionStatus == PermissionStatus.denied) {}
         }
         // ------------------------------------------------------------
-
       }
 
       // Granted Limited
@@ -108,6 +102,5 @@ class LocationService {
         onGranted();
       }
     }
-
   }
 }

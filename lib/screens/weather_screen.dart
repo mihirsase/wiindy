@@ -18,7 +18,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   void initState() {
-    _weatherController.loadWeatherData(city: "London");
+    _weatherController.loadCurrentLocationWeather();
     super.initState();
   }
 
