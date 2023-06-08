@@ -1,4 +1,4 @@
-# Wiinsy
+# Wiindy
 
 This is a flutter application for a demonstrating getx and unit tests. Weatherbit api's are used to get the required data
 
