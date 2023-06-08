@@ -1,16 +1,20 @@
-# wiindy
+# Wiinsy
 
-A new Flutter project.
+This is a flutter application for a demonstrating getx and unit tests. Weatherbit api's are used to get the required data
 
-## Getting Started
+## Project Structure
 
-This project is a starting point for a Flutter application.
+- **.screens** : All the main screens for the app goes into this package
+- **.controllers** : All business logic is inside these files
+- **.components** : All reusable widgets are stored in this package
+- **.models** : All the blueprint files for the app goes into this package
+- **.repos** : All repository classes goes into this package
+- **.services** : All classes which provides additional help goes in this package
+- **.extensions** : Extensions on data types goes in this package
 
-A few resources to get you started if this is your first Flutter project:
+## Third party packages used in the project
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **get** : Used for state management, navigation and dependency injection
+- **intl** : Used for date formatting
+- **location + permission_handler** : Used to retrieve users current location
+- **mockito** : Used for mocking api calls in unit tests
