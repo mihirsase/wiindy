@@ -39,7 +39,7 @@ class WeatherRepo {
     required double lng,
   }) async {
     ApiResponse response = await apiService.apiCall(
-      route: 'current?key=9b3bf0fb00af4d2fad81c842ec6e90ea&&lat=$lat&lon=$lng',
+      route: 'current?key=9b3bf0fb00af4d2fad81c842ec6e90ea&lat=$lat&lon=$lng',
       requestMethod: RequestMethod.get,
     );
     if (response.isSuccess) {

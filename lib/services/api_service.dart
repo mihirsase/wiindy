@@ -44,8 +44,8 @@ class ApiService extends GetConnect {
     return ApiResponse(
       isSuccess: false,
       status: response.status,
-      errorMessage: response.body['message'] != null && response.body['message'] is String
-          ? response.body['message']
+      errorMessage: response.body['error'] != null && response.body['error'] is String
+          ? response.body['error']
           : "something_went_wrong".tr,
     );
   }
