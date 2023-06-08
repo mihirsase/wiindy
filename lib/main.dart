@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wiindy/screens/weather_screen.dart';
+import 'package:wiindy/screens/spalsh_screen.dart';
 import 'package:wiindy/services/api_service.dart';
 
 void main() {
@@ -20,7 +20,7 @@ class Wiindy extends StatelessWidget {
           child: widget!,
         );
       },
-      home: const WeatherScreen(),
+      home: const SplashScreen(),
     );
   }
 }
