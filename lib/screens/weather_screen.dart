@@ -5,6 +5,7 @@ import 'package:wiindy/components/weather_info_card.dart';
 import 'package:wiindy/controller/weather_controller.dart';
 import 'package:wiindy/models/forecast_weather.dart';
 import 'package:wiindy/services/notifier.dart';
+import 'package:wiindy/services/pallete.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({Key? key}) : super(key: key);
@@ -68,24 +69,31 @@ class _WeatherScreenState extends State<WeatherScreen> {
             elevation: 1,
             child: Container(
               height: 50,
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: TextField(
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  hintText: "Search for cities",
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.black,
+              child: Row(
+                children: [
+                  const Icon(Icons.search),
+                  const SizedBox(
+                    width: 4,
                   ),
-                ),
-                textCapitalization: TextCapitalization.sentences,
-                onChanged: (String? val) {
-                  city = val;
-                },
-                cursorWidth: 1,
-                cursorColor: Colors.black,
+                  Expanded(
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Search for cities",
+                      ),
+                      textCapitalization: TextCapitalization.sentences,
+                      onChanged: (String? val) {
+                        city = val;
+                      },
+                      cursorWidth: 1,
+                      cursorColor: Pallete.black,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

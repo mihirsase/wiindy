@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wiindy/screens/weather_screen.dart';
 import 'package:wiindy/services/location_service.dart';
+import 'package:wiindy/services/pallete.dart';
 
 class EnableLocationScreen extends StatefulWidget {
   const EnableLocationScreen({Key? key}) : super(key: key);
@@ -45,15 +46,15 @@ class _EnableLocationScreenState extends State<EnableLocationScreen> {
               ElevatedButton(
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.all<Color>(
-                    const Color(0xFF457FFA),
+                    Pallete.primary,
                   ),
                 ),
                 onPressed: () {
                   LocationService.instance.enableLocationSharing(onGranted: () {
-                    Get.to(() => const WeatherScreen());
+                    Get.off(() => const WeatherScreen());
                   });
                 },
-                child: const SizedBox(
+                child: SizedBox(
                   width: 100,
                   height: 50,
                   child: Center(
@@ -61,7 +62,7 @@ class _EnableLocationScreenState extends State<EnableLocationScreen> {
                       'Enable',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.white,
+                        color: Pallete.white,
                       ),
                     ),
                   ),

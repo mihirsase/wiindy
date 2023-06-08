@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:wiindy/screens/enable_location_screen.dart';
 import 'package:wiindy/screens/weather_screen.dart';
 import 'package:wiindy/services/location_service.dart';
+import 'package:wiindy/services/pallete.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -17,9 +18,9 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 2)).then((value) {
       LocationService.instance.checkLocationPermission().then((bool status) {
         if (status) {
-          Get.to(() => const WeatherScreen());
+          Get.off(() => const WeatherScreen());
         } else {
-          Get.to(() => const EnableLocationScreen());
+          Get.off(() => const EnableLocationScreen());
         }
       });
     });
@@ -30,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFF457FFA),
+        backgroundColor: Pallete.primary,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -40,12 +41,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 80,
                 width: 80,
               ),
-              const Text(
+              Text(
                 "Wiindy",
                 style: TextStyle(
                   fontSize: 42,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Pallete.white,
                 ),
               )
             ],

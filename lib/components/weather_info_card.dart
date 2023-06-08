@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wiindy/models/current_weather.dart';
 import 'package:wiindy/extensions/date_time_extension.dart';
+import 'package:wiindy/services/pallete.dart';
 
 class WeatherInfoCard extends StatelessWidget {
   final CurrentWeather currentWeather;
@@ -15,7 +16,7 @@ class WeatherInfoCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: const Color(0xFF457FFA),
+        color: Pallete.primary,
         borderRadius: BorderRadius.circular(16),
       ),
       padding: const EdgeInsets.all(22),
@@ -24,21 +25,21 @@ class WeatherInfoCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.location_on,
-                color: Colors.white,
+                color: Pallete.white,
               ),
               Expanded(
                 child: Text(
                   currentWeather.cityName ?? "",
-                  style: const TextStyle(fontSize: 14, color: Colors.white),
+                  style: TextStyle(fontSize: 14, color: Pallete.white),
                 ),
               ),
               Text(
                 DateTime.now().toDateFormat(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
-                  color: Colors.white,
+                  color: Pallete.white,
                 ),
               ),
             ],
@@ -62,9 +63,9 @@ class WeatherInfoCard extends StatelessWidget {
                   children: [
                     Text(
                       '${currentWeather.temp ?? ""}° C',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 22,
-                        color: Colors.white,
+                        color: Pallete.white,
                       ),
                     ),
                     const SizedBox(
@@ -72,9 +73,9 @@ class WeatherInfoCard extends StatelessWidget {
                     ),
                     Text(
                       currentWeather.weather?.description ?? "",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 22,
-                        color: Colors.white,
+                        color: Pallete.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -96,9 +97,9 @@ class WeatherInfoCard extends StatelessWidget {
                       ),
                       Text(
                         '${currentWeather.windSpd?.round() ?? ""} m/s',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Pallete.white,
                         ),
                       ),
                     ],
@@ -118,9 +119,9 @@ class WeatherInfoCard extends StatelessWidget {
                       ),
                       Text(
                         '${currentWeather.rh ?? ""}%',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white,
+                          color: Pallete.white,
                         ),
                       ),
                     ],
@@ -134,9 +135,9 @@ class WeatherInfoCard extends StatelessWidget {
           ),
           Text(
             "Last updated at ${currentWeather.obTime.toTimeFormat()}",
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
-              color: Colors.white,
+              color: Pallete.white,
             ),
           ),
         ],
